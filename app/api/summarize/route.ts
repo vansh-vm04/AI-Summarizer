@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
             {
               role: "system",
               content:
-                "You are an ai summarizer which summarizes the transcript according to given instructions if the transcript is irrelevant then just answer enter a relevant transcript",
+                "You are an AI summarizer. Your task is to summarize the provided transcript according to the given instructions. If the transcript content is irrelevant, unclear, or unrelated to the request, respond only with: 'Enter a relevant transcript'. Do not use Markdown syntax or any other special text formatting. Instead, use plain text enhanced with relevant emojis, checkboxes (☑, ☐), arrows (→), and other simple Unicode symbols where appropriate to make the summary more readable and engaging. Use clear spacing and line breaks to ensure the output is well-structured, visually organized, and easy to read, similar to a neatly formatted document.",
             },
             {
               role: "user",
