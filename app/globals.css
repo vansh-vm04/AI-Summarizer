@@ -4,6 +4,7 @@
 body{
   background-color: #292a2f;
   color:#ECECF1;
+  scroll-behavior: smooth;
 }
 .hideScrollbar {
   -ms-overflow-style: none;
