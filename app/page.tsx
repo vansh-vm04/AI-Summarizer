@@ -7,7 +7,6 @@ export default function Home() {
   const [transcript, setTranscript] = useState("");
   const [prompt, setPrompt] = useState("");
   const [summary, setSummary] = useState("");
-  const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [file, setFile] = useState<File | null>(null);
 
