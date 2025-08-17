@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function Home() {
-  const summaryRef = useRef<HTMLTextAreaElement | null>(null);
+  const summaryRef = useRef<HTMLDivElement | null>(null);
   const [transcript, setTranscript] = useState("");
   const [prompt, setPrompt] = useState("");
   const [summary, setSummary] = useState("");
@@ -21,7 +21,7 @@ export default function Home() {
       setFileText();
     }
     if (summaryRef.current) {
-      summaryRef.current!.scrollTop = summaryRef.current?.scrollHeight;
+      summaryRef.current.scrollIntoView();
     }
   }, [summary, file]);
 
@@ -65,15 +65,19 @@ export default function Home() {
     setLoading(false);
   };
 
-  const handleShare = async () => {};
 
   return (
     <div className="flex flex-col justify-center items-center h-screen w-full bg-gray-950 text-white px-6 py-4 gap-2">
       <span className="text-4xl font-bold text-transparent bg-gradient-to-br from-purple-400 to-blue-700 bg-clip-text px-8 py-4 rounded-xl shadow-lg max-sm:text-2xl">
         AI Summarizer
       </span>
-
       <div className="w-full max-w-5xl flex flex-col gap-4">
+        {summary && (
+        <div className="w-full hideScrollbar scroll-smooth overflow-y-scroll h-[55vh] p-4 text-white bg-transparent">
+          <pre className="whitespace-pre-wrap">{summary}</pre>
+          <div ref={summaryRef}/>
+        </div>
+      )}
         <textarea
           onChange={(e) => setTranscript(e.target.value)}
           value={transcript}
@@ -114,40 +118,6 @@ export default function Home() {
             Generate Summary
           </button>
         </div>
-        <textarea
-          ref={summaryRef}
-          onChange={(e) => setSummary(e.target.value)}
-          value={summary}
-          readOnly={loading || summary == ""}
-          spellCheck={false}
-          className="w-full hideScrollbar scroll-smooth resize-none overflow-y-auto h-[50vh] p-4 text-white bg-transparent rounded-xl outline-none"
-        />
-        {summary && (
-          <div className="flex flex-wrap gap-4 items-center">
-            <input
-              onChange={(e) => setEmail(e.target.value)}
-              type="email"
-              value={email}
-              placeholder="Recipient email..."
-              className="flex-1 bg-gray-100 border border-gray-700 text-gray-900 text-sm rounded-xl p-3 focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
-            />
-            <button
-              disabled={loading}
-              onClick={handleShare}
-              type="button"
-              className="text-white disabled:bg-green-900 bg-green-600 hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-xl text-sm px-6 py-3"
-            >
-              Share Summary
-            </button>
-            <button
-              disabled={loading}
-              onClick={() => setSummary("")}
-              className="text-white disabled:bg-red-900 bg-red-600 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-xl text-sm px-6 py-3"
-            >
-              Clear Summary
-            </button>
-          </div>
-        )}
       </div>
     </div>
   );
